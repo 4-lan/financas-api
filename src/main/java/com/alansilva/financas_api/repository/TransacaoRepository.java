@@ -1,5 +1,6 @@
 package com.alansilva.financas_api.repository;
 
+import com.alansilva.financas_api.entity.Categoria;
 import com.alansilva.financas_api.entity.Transacao;
 import com.alansilva.financas_api.entity.enums.TipoTransacao;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -32,4 +33,6 @@ public interface TransacaoRepository extends JpaRepository<Transacao, UUID> {
     );
 
     List<Transacao> findByTipo(TipoTransacao tipo);
+
+    boolean existsByCategoria(Categoria categoria);
 }

@@ -38,17 +38,17 @@ public class TransacaoService {
                 request.valor()
         );
 
-        Categoria categoria = categoriaRepository.findById(
-                        request.idCategoria())
-                .orElseThrow(() -> {
-                    log.warn(
-                            "Categoria não encontrada. Id={}",
-                            request.idCategoria()
-                    );
-                    return new ResourceNotFoundException(
-                            "Categoria não encontrada!"
-                    );
-                });
+            Categoria categoria = categoriaRepository.findById(
+                            request.idCategoria())
+                    .orElseThrow(() -> {
+                        log.warn(
+                                "Categoria não encontrada. Id={}",
+                                request.idCategoria()
+                        );
+                        return new ResourceNotFoundException(
+                                "Categoria não encontrada!"
+                        );
+                    });
 
         Transacao transacao = Transacao.builder()
                 .tipo(request.tipo())

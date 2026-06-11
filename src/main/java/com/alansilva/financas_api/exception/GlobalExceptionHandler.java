@@ -1,6 +1,5 @@
 package com.alansilva.financas_api.exception;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -53,8 +52,9 @@ public class GlobalExceptionHandler {
         ApiError error = new ApiError(
                 OffsetDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
-                message,
-                ex.getMessage()
+                "Erro de validação",
+                message
+
         );
 
         return ResponseEntity.badRequest().body(error);
@@ -67,7 +67,7 @@ public class GlobalExceptionHandler {
                 OffsetDateTime.now(),
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 "Erro interno",
-                ex.getMessage()
+                "Ocorreu um erro inesperado"
         );
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);

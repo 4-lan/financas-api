@@ -6,10 +6,10 @@ import com.alansilva.financas_api.entity.Categoria;
 import com.alansilva.financas_api.exception.BusinessException;
 import com.alansilva.financas_api.exception.ResourceNotFoundException;
 import com.alansilva.financas_api.repository.CategoriaRepository;
+import com.alansilva.financas_api.repository.TransacaoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.lang.module.ResolutionException;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +18,7 @@ import java.util.UUID;
 public class CategoriaService {
 
     private final CategoriaRepository categoriaRepository;
+    private final TransacaoRepository transacaoRepository;
 
     public CategoriaResponseDTO criar(CategoriaRequestDTO request) {
 
@@ -86,6 +87,12 @@ public class CategoriaService {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Categoria não encontrada"
                 ));
+
+        if(transacaoRepository.existsByCategoria(categoria)){
+            throw new BusinessException(
+                    "Não é possivel excluir uma categoria que possui transações vinculadas"
+            );
+        }
 
         categoriaRepository.delete(categoria);
     }
