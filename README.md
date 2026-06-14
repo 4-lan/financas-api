@@ -1,143 +1,209 @@
-# Finanças API
+# 💰 Finanças API
 
-API REST desenvolvida com Spring Boot para controle financeiro pessoal, permitindo o gerenciamento de categorias e transações financeiras, além de fornecer resumos e indicadores financeiros.
+API REST desenvolvida com Java e Spring Boot para gerenciamento de finanças pessoais.
 
-🚀 Produção:
-https://financas-api-production-cac9.up.railway.app
+O sistema permite cadastrar categorias, registrar transações financeiras, consultar resumos e gerar indicadores financeiros através de endpoints REST documentados com Swagger.
 
-📖 Swagger:
-https://financas-api-production-cac9.up.railway.app/swagger-ui/index.html
+---
 
-## Tecnologias Utilizadas
+## 🚀 Tecnologias Utilizadas
 
 * Java 21
-* Spring Boot
+* Spring Boot 4
 * Spring Data JPA
 * PostgreSQL
-* Maven
-* Swagger / OpenAPI
+* Flyway
 * Bean Validation
 * Lombok
-* Railway (Deploy)
+* Swagger / OpenAPI
+* JUnit 5
+* Mockito
+* Maven
+* Railway
 
-## Funcionalidades
+---
+
+## 📋 Funcionalidades
 
 ### Categorias
 
 * Criar categoria
-* Listar categorias
 * Buscar categoria por ID
+* Listar categorias
 * Atualizar categoria
 * Excluir categoria
 
 ### Transações
 
 * Criar transação
-* Listar transações com paginação
 * Buscar transação por ID
-* Buscar transações por tipo
-* Filtrar transações por período
 * Atualizar transação
 * Excluir transação
+* Listar transações com paginação
+* Filtrar transações por período
+* Buscar transações por tipo (ENTRADA ou SAIDA)
 
-### Dashboard Financeiro
+### Relatórios
 
-* Total de entradas
-* Total de saídas
-* Saldo atual
-* Quantidade de entradas
-* Quantidade de saídas
+* Resumo financeiro
+* Dashboard financeiro
 
-### Resumo Financeiro
+---
 
-* Total de receitas
-* Total de despesas
-* Saldo consolidado
+## 🏗️ Estrutura do Projeto
 
-## Diferenciais do Projeto
-
-- Deploy em produção no Railway
-- Banco PostgreSQL hospedado na nuvem
-- Documentação automática com Swagger/OpenAPI
-- Tratamento global de exceções
-- Validação de dados com Bean Validation
-- Paginação de resultados
-- Logs de aplicação com SLF4J
-- API pública acessível pela internet
-
-## Validações
-
-A API utiliza Bean Validation para garantir a integridade dos dados:
-
-* Campos obrigatórios
-* Valores positivos
-* Datas não futuras
-* Limites de tamanho para textos
-* Tratamento de erros padronizado
-
-## Documentação Swagger
-
-A documentação interativa está disponível em:
-
-https://financas-api-production-cac9.up.railway.app/swagger-ui/index.html
-
-## API em Produção
-
-URL base:
-
-https://financas-api-production-cac9.up.railway.app
-
-## Exemplos
-
-### Criar Categoria
-
-POST /categorias
-
-```json
-{
-  "nome": "Salário"
-}
+```text
+src
+ ├── controller
+ ├── service
+ ├── repository
+ ├── entity
+ ├── dto
+ ├── exception
+ ├── config
+ └── db
+      └── migration
 ```
 
-### Criar Transação
+---
 
-POST /transacoes
+## 🗄️ Banco de Dados
 
-```json
-{
-  "tipo": "ENTRADA",
-  "valor": 5000.00,
-  "data": "2026-06-12",
-  "descricao": "Salário mensal",
-  "idCategoria": "UUID_DA_CATEGORIA"
-}
+O projeto utiliza PostgreSQL.
+
+As tabelas são controladas através do Flyway.
+
+Migration inicial:
+
+```sql
+V1__create_tables.sql
 ```
 
-## Como Executar Localmente
+Tabelas criadas:
 
-### Clonar o projeto
+* categorias
+* transacoes
 
-```bash
-git clone https://github.com/4-lan/financas-api.git
-```
+---
 
-### Configurar variáveis de ambiente
+## ⚙️ Configuração
 
-```yaml
+Defina as variáveis de ambiente:
+
+```properties
 DB_URL=jdbc:postgresql://localhost:5432/financas_db
 DB_USER=postgres
 DB_PASSWORD=sua_senha
 ```
 
-### Executar a aplicação
+---
+
+## ▶️ Executando Localmente
+
+Clone o repositório:
 
 ```bash
-./mvnw spring-boot:run
+git clone https://github.com/seu-usuario/financas-api.git
 ```
 
-## Autor
+Entre na pasta:
+
+```bash
+cd financas-api
+```
+
+Execute:
+
+```bash
+mvn spring-boot:run
+```
+
+A aplicação ficará disponível em:
+
+```text
+http://localhost:8080
+```
+
+---
+
+## 📚 Documentação da API
+
+Swagger UI:
+
+```text
+http://localhost:8080/swagger-ui.html
+```
+
+OpenAPI:
+
+```text
+http://localhost:8080/v3/api-docs
+```
+
+---
+
+## ☁️ Deploy
+
+Aplicação publicada no Railway.
+
+A API está preparada para utilização com variáveis de ambiente e execução automatizada das migrations do Flyway durante o deploy.
+
+---
+
+## 🧪 Testes
+
+Foram implementados testes unitários utilizando:
+
+* JUnit 5
+* Mockito
+
+Cobertura atual:
+
+### TransacaoService
+
+* Criar transação com sucesso
+* Criar transação com categoria inexistente
+* Buscar transação por ID
+* Excluir transação com sucesso
+* Excluir transação inexistente
+
+Executar testes:
+
+```bash
+mvn test
+```
+
+---
+
+## ⭐ Diferenciais Implementados
+
+* Arquitetura em camadas
+* DTOs para entrada e saída de dados
+* Validação de requisições com Bean Validation
+* Tratamento global de exceções
+* Paginação de resultados
+* Filtros por período
+* Dashboard financeiro
+* Resumo financeiro
+* Documentação Swagger/OpenAPI
+* Testes unitários
+* Controle de versão do banco com Flyway
+* Deploy em nuvem com Railway
+
+---
+## 🔮 Próximas Implementações
+
+- Implementação de autenticação e autorização com JWT
+- Controle de usuários e perfis
+- Dashboard financeiro com gráficos
+- Relatórios mensais em PDF
+- Testes de integração utilizando Testcontainers
+- Monitoramento da aplicação com Spring Boot Actuator
+
+---
+
+## 👨‍💻 Autor
 
 Alan Silva
 
-GitHub:
-https://github.com/4-lan
+Desenvolvedor Java Back-End.
